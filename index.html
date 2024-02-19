@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Catálogo de Productos</title>
+</head>
+<body>
+    <div id="categoryFilter">
+        <label for="categorySelect">Filtrar por categoría:</label>
+        <select id="categorySelect">
+            <option value="">Todas</option>
+            <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+        </select>
+    </div>
+    <div id="productList" class="product-list">
+        <!-- Los productos se insertarán aquí -->
+    </div>
+    <!-- Botón flotante para el carrito -->
+    <button id="floatCartBtn" style="position: fixed; bottom:   20px; right:   20px;">Ver Carrito</button>
+
+    <!-- Modal para el carrito -->
+    <div id="cartModal"
+        style="display: none; position: fixed; z-index:   1000; left:   0; top:   0; width:   100%; height:   100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+        <div
+            style="background-color: #fefefe; margin:   15% auto; padding:   20px; border:   1px solid #888; width:   80%;">
+            <span id="closeCartModal"
+                style="color: #aaa; float: right; font-size:   28px; font-weight: bold;">&times;</span>
+            <h2>Carrito de Compra</h2>
+            <form id="checkoutForm">
+                <label for="customerName">Nombre:</label>
+                <input type="text" id="customerName" required>
+                <br>
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" required>
+                <br>
+                <button type="button" onclick="openWhatsApp()">Realizar Pedido</button>
+            </form>
+            <div id="cartItems"></div>
+            <button id="closeCartModalBtn"
+                style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Cerrar</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

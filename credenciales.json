@@ -1,0 +1,13 @@
+{
+    "web": {
+        "client_id": "311064419180-mfai45aal0146ripap0vn6isn9gq5e57.apps.googleusercontent.com",
+        "project_id": "catalogobodega",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": "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",
+        "javascript_origins": [
+            "http://127.0.0.1:5500"
+        ]
+    }
+}
