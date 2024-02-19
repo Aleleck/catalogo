@@ -127,3 +127,19 @@
     border-radius:  4px;
 }
 
+.add-to-cart-btn:hover {
+    background-color: #45a049; /* Color de fondo al pasar el mouse */
+}
+
+#floatCartBtn img {
+    width:  20px; /* Ajusta el tamaño de la imagen */
+    height:  20px; /* Ajusta el tamaño de la imagen */
+    vertical-align: middle; /* Alinea la imagen verticalmente con el texto */
+    margin-right:  5px; /* Añade un espacio a la derecha de la imagen */
+}
+
+.cart-item-count {
+    font-size:  1.5em; /* Ajusta el tamaño del texto */
+    vertical-align: middle; /* Alinea el texto verticalmente con la imagen */
+    color: red;
+}

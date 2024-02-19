@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>Catálogo de Productos</title>
 </head>
+
 <body>
     <div id="categoryFilter">
         <label for="categorySelect">Filtrar por categoría:</label>
@@ -18,8 +20,11 @@
     <div id="productList" class="product-list">
         <!-- Los productos se insertarán aquí -->
     </div>
-    <!-- Botón flotante para el carrito -->
-    <button id="floatCartBtn" style="position: fixed; bottom:   20px; right:   20px;">Ver Carrito</button>
+    <button  style="position: fixed ; bottom:   1px; right:   1px; border-radius: 50px; border: none;">
+        <img  id="floatCartBtn" src="Carrito.png" alt="Carrito de Compras" style="width:   100px; height:   100px;">
+        <span id="cartItemCount" class="cart-item-count">0</span>
+
+    </button>
 
     <!-- Modal para el carrito -->
     <div id="cartModal"
@@ -40,9 +45,11 @@
             </form>
             <div id="cartItems"></div>
             <button id="closeCartModalBtn"
-                style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Cerrar</button>
+            style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Cerrar</button>
         </div>
     </div>
+    
     <script src="main.js"></script>
 </body>
+
 </html>

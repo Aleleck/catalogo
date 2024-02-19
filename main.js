@@ -32,7 +32,7 @@ function displayProducts(products) {
 
         const productQuantity = document.createElement('p');
         productQuantity.classList.add('product-quantity');
-        productQuantity.innerText = `Cantidad: ${productRow.c[3].v}`; // Cantidad
+        productQuantity.innerText = `Cantidad: ${Math.floor(productRow.c[3].v)}`; // Redondea y convierte a entero
         productInfo.appendChild(productQuantity);
 
         const productValue = document.createElement('p');
@@ -53,6 +53,7 @@ function showCart() {
     cartItemsDiv.innerHTML = ''; // Limpiar el contenido anterior
 
     let total =  0; // Variable para almacenar el total del pedido
+    let itemCount = cart.length; // Contar la cantidad de artículos en el carrito
 
     cart.forEach(item => {
         const itemDiv = document.createElement('div');
@@ -79,6 +80,7 @@ function showCart() {
     cartItemsDiv.appendChild(totalDiv);
 
     document.getElementById('cartModal').style.display = 'block';
+    document.getElementById('cartItemCount').innerText = itemCount;
 }
 
 
@@ -118,6 +120,7 @@ function addToCart(productRow, productCard) {
 
     let addButton = document.createElement('button');
     addButton.innerText = 'Añadir al carrito';
+    addButton.classList.add("add-to-cart-btn");
     addButton.addEventListener('click', function () {
         let quantity = parseInt(quantityInput.value);
         if (!isNaN(quantity) && quantity > 0) {
@@ -146,6 +149,8 @@ function addToCart(productRow, productCard) {
         } else {
             alert('Por favor, introduce una cantidad válida.');
         }
+        const currentCount = parseInt(document.getElementById('cartItemCount').innerText);
+        document.getElementById('cartItemCount').innerText = currentCount +  1;
     });
 
     productCard.appendChild(quantityInput);
@@ -157,7 +162,10 @@ function removeFromCart(itemId) {
     let cart = JSON.parse(localStorage.getItem('shopping-cart')) || [];
     cart = cart.filter(item => item.id !== itemId);
     localStorage.setItem('shopping-cart', JSON.stringify(cart));
+    
     showCart(); // Actualiza el carrito después de eliminar
+    const currentCount = parseInt(document.getElementById('cartItemCount').innerText);
+    document.getElementById('cartItemCount').innerText = currentCount -  1;
 }
 
 fetch(`${FULL_URL}&headers=1`)
@@ -224,3 +232,5 @@ function getCartDetails() {
     });
     return cartDetails;
 }
+
+
