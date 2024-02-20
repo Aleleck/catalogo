@@ -143,3 +143,114 @@
     vertical-align: middle; /* Alinea el texto verticalmente con la imagen */
     color: red;
 }
+
+/* Estilos para el modal de pedido */
+#cartModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Estilos para los botones del modal */
+#cartModal button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    margin-top: 10px;
+    border-radius: 5px; /* Redondea los bordes de los botones */
+}
+
+#cartModal button:hover {
+    opacity: 1;
+}
+
+/* Estilos para los campos del formulario */
+#cartModal label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#cartModal input[type="text"],
+#cartModal input[type="number"] {
+    width: calc(100% - 12px); /* Ajusta el ancho del input */
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#cartModal input[type="number"] {
+    width: 50px; /* Ancho fijo para los inputs de número */
+}
+
+/* Estilos para los detalles del pedido */
+.cart-details {
+    margin-top: 20px;
+}
+
+/* Estilos para los botones de eliminar del carrito */
+.cart-item-remove {
+    background-color: #f44336;
+}
+
+.cart-item-remove:hover {
+    background-color: #d32f2f;
+}
+
+/* Estilos para la tabla del carrito */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Ajustar el ancho de las columnas */
+.cart-table td:nth-child(1) {
+    width: 50%; /* Descripción del producto */
+    
+}
+
+.cart-table td:nth-child(2),
+.cart-table td:nth-child(3) {
+    width: 20%; /* Cantidad y Valor */
+    text-align: center; /* Alinear a la derecha */
+}
+
+.cart-table td:nth-child(4) {
+    width: 10%; /* Botón de eliminar */
+}
+
+/* Alinear el botón de eliminar a la derecha */
+.cart-table td:last-child {
+    text-align: center;
+}
+
+/* Estilos para el botón de eliminar */
+.cart-item-remove {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.cart-item-remove:hover {
+    background-color: #d32f2f;
+}
+

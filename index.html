@@ -27,7 +27,7 @@
     </button>
 
     <!-- Modal para el carrito -->
-    <div id="cartModal"
+    <div id="cartModal" 
         style="display: none; position: fixed; z-index:   1000; left:   0; top:   0; width:   100%; height:   100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
         <div
             style="background-color: #fefefe; margin:   15% auto; padding:   20px; border:   1px solid #888; width:   80%;">
@@ -40,12 +40,10 @@
                 <br>
                 <label for="address">Dirección:</label>
                 <input type="text" id="address" required>
-                <br>
-                <button type="button" onclick="openWhatsApp()">Realizar Pedido</button>
             </form>
             <div id="cartItems"></div>
-            <button id="closeCartModalBtn"
-            style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Cerrar</button>
+            <button type="button" onclick="openWhatsApp()"
+            style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Realizar Pedido</button>
         </div>
     </div>
     

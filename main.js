@@ -55,32 +55,57 @@ function showCart() {
     let total = 0; // Variable para almacenar el total del pedido
     let itemCount = cart.length; // Contar la cantidad de artículos en el carrito
 
-    cart.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.innerHTML = `Nombre: ${item.name}, Cantidad: ${item.quantity}`;
+    // Crear la tabla
+    const table = document.createElement('table');
+    table.classList.add('cart-table');
 
-        // Botón de eliminar
+    // Crear encabezados de la tabla
+    const headers = ['Producto', 'Cantidad', 'Valor', ''];
+    const headerRow = document.createElement('tr');
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    table.appendChild(headerRow);
+
+    // Agregar filas para cada artículo en el carrito
+    cart.forEach(item => {
+        const row = document.createElement('tr');
+        const nameCell = document.createElement('td');
+        nameCell.textContent = item.name;
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = item.quantity;
+        const valueCell = document.createElement('td');
+        valueCell.textContent = item.value.toLocaleString('es-ES'); // Formatear el valor
+        const removeButtonCell = document.createElement('td');
         const removeButton = document.createElement('button');
-        removeButton.innerText = 'Eliminar';
-        removeButton.addEventListener('click', () => {
-            // Función para eliminar un artículo del carrito
+        removeButton.textContent = 'Eliminar';
+        removeButton.classList.add('cart-item-remove');
+        removeButton.addEventListener('click', function () {
             removeFromCart(item.id);
         });
+        removeButtonCell.appendChild(removeButton);
 
-        itemDiv.appendChild(removeButton);
-        cartItemsDiv.appendChild(itemDiv);
+        row.appendChild(nameCell);
+        row.appendChild(quantityCell);
+        row.appendChild(valueCell);
+        row.appendChild(removeButtonCell);
+        table.appendChild(row);
 
         // Calcular el total del pedido
-        const productValue = parseFloat(item.value);
-        if (!isNaN(productValue)) {
-            total += item.quantity * productValue;
-        }
+        total += item.quantity * parseFloat(item.value);
     });
 
+    // Agregar la tabla al contenedor del carrito
+    cartItemsDiv.appendChild(table);
+
+    // Mostrar el total del pedido en el modal del carrito
     // Mostrar el total del pedido en el modal del carrito
     const totalDiv = document.createElement('div');
-    totalDiv.innerHTML = `Total del pedido: ${total.toFixed(2)}`;
+    totalDiv.innerHTML = `<span style="font-size: 18px; font-weight: bold; text-align: center;">Valor Total: ${total.toLocaleString('es-ES')}</span>`; // Formatear el total
     cartItemsDiv.appendChild(totalDiv);
+
 
     document.getElementById('cartModal').style.display = 'block';
     document.getElementById('cartItemCount').innerText = itemCount;
@@ -95,9 +120,9 @@ document.getElementById('closeCartModal').addEventListener('click', () => {
 });
 
 // Evento click para cerrar el modal
-document.getElementById('closeCartModalBtn').addEventListener('click', () => {
-    document.getElementById('cartModal').style.display = 'none';
-});
+//document.getElementById('closeCartModalBtn').addEventListener('click', () => {
+//  document.getElementById('cartModal').style.display = 'none';
+//});
 
 // Función para agregar un producto al carrito
 function addToCart(productRow, productCard) {
@@ -151,7 +176,7 @@ function removeFromCart(itemId) {
     let cart = JSON.parse(localStorage.getItem('shopping-cart')) || [];
     cart = cart.filter(item => item.id !== itemId);
     localStorage.setItem('shopping-cart', JSON.stringify(cart));
-    
+
     showCart(); // Actualiza el carrito después de eliminar
     const currentCount = parseInt(document.getElementById('cartItemCount').innerText);
     document.getElementById('cartItemCount').innerText = currentCount - 1;
