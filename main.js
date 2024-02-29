@@ -1,6 +1,6 @@
 const SHEET_ID = '1pblbPBLCxMv0LtBbQCuc-KVu-8B2eUZHLbMCflmHrr4';
 const SHEET_TITLE = 'Catalogo';
-const SHEET_RANGE = 'A1:F39'; // Asegúrate de que la columna de categoría esté incluida en este rango
+const SHEET_RANGE = 'A1:H'; // Asegúrate de que la columna de categoría esté incluida en este rango
 
 const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_TITLE}&range=${SHEET_RANGE}`;
 
@@ -40,11 +40,22 @@ function displayProducts(products) {
         productValue.innerText = `Para recoger: ${productRow.c[4].v}`; // Valor
         productInfo.appendChild(productValue);
 
+        const motoDeliveryPrice = document.createElement('p');
+        motoDeliveryPrice.classList.add('product-delivery-price');
+        motoDeliveryPrice.innerText = `Domicilio en moto: ${productRow.c[6].v}`; // Precio para domicilio en moto
+        productInfo.appendChild(motoDeliveryPrice);
+
+        const carDeliveryPrice = document.createElement('p');
+        carDeliveryPrice.classList.add('product-delivery-price');
+        carDeliveryPrice.innerText = `Domicilio en carro: ${productRow.c[7].v}`; // Precio para domicilio en carro
+        productInfo.appendChild(carDeliveryPrice);
+
         addToCart(productRow, productCard);
         productCard.appendChild(productInfo);
         productList.appendChild(productCard);
     });
 }
+
 
 // Función para mostrar el carrito en el modal
 function showCart() {
@@ -221,10 +232,6 @@ fetch(`${FULL_URL}&headers=1`)
             });
     });
 
-
-
-
-
 // Función para abrir WhatsApp con la información del pedido
 function openWhatsApp() {
     const customerName = document.getElementById('customerName').value;
@@ -256,6 +263,3 @@ function filterByCategory(category) {
     const filteredProducts = data.table.rows.filter(row => row.c[5].v === category || category === '');
     displayProducts(filteredProducts);
 }
-
-
-
