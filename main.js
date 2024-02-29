@@ -257,20 +257,35 @@ fetch(`${FULL_URL}&headers=1`)
     });
 
 // Función para abrir WhatsApp con la información del pedido
+
 function openWhatsApp() {
     const customerName = document.getElementById('customerName').value;
     const address = document.getElementById('address').value;
+    const deliveryOption = document.getElementById('deliveryOption').value;
 
     const cart = JSON.parse(localStorage.getItem('shopping-cart')) || [];
     let total = 0;
+
     cart.forEach(item => {
-        total += item.quantity * parseFloat(item.value); // Asumiendo que cada ítem tiene una propiedad 'value'
+        let itemValue;
+        if (deliveryOption === 'pickup') {
+            itemValue = item.pickupValue;
+        } else if (deliveryOption === 'moto') {
+            itemValue = item.motoDeliveryValue;
+        } else if (deliveryOption === 'car') {
+            itemValue = item.carDeliveryValue;
+        }
+
+        if (!isNaN(itemValue)) {
+            total += item.quantity * parseFloat(itemValue);
+        }
     });
 
-    const message = `Nombre: ${customerName}\nDirección: ${address}\n\nDetalles del pedido:\n${getCartDetails()}\n\nTotal: ${total.toFixed(2)}`;
+    const message = `Nombre: ${customerName}\nDirección: ${address}\nMétodo de entrega: ${deliveryOption}\n\nDetalles del pedido:\n${getCartDetails()}\n\nTotal: ${total.toLocaleString('es-ES')}`;
 
     window.open(`https://api.whatsapp.com/send?phone=3053012883&text=${encodeURIComponent(message)}`);
 }
+
 
 // Función para obtener los detalles del carrito
 function getCartDetails() {
