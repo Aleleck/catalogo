@@ -182,21 +182,26 @@ function removeFromCart(itemId) {
     document.getElementById('cartItemCount').innerText = currentCount - 1;
 }
 
+let data; // Define data como una variable global
+
 // Llamada inicial para cargar los productos al cargar la página
 fetch(`${FULL_URL}&headers=1`)
     .then(response => response.text())
     .then(text => {
         const categoriesData = JSON.parse(text.substr(47).slice(0, -2));
-        const categorySelect = document.getElementById('categorySelect');
+        const categoryButtons = document.getElementById('categoryButtons');
         const categoriesSet = new Set();
 
-        // Rellena el select con las categorías únicas
+        // Rellena los botones con las categorías únicas
         categoriesData.table.rows.forEach((row, index) => {
             if (index !== 0 && row.c[5] && !categoriesSet.has(row.c[5].v)) {
-                const option = document.createElement('option');
-                option.value = row.c[5].v;
-                option.textContent = row.c[5].v;
-                categorySelect.appendChild(option);
+                const button = document.createElement('button');
+                button.classList.add('abf');
+                button.textContent = row.c[5].v;
+                button.addEventListener('click', function() {
+                    filterByCategory(row.c[5].v);
+                });
+                categoryButtons.appendChild(button);
                 categoriesSet.add(row.c[5].v);
             }
         });
@@ -205,10 +210,20 @@ fetch(`${FULL_URL}&headers=1`)
         fetch(FULL_URL)
             .then(response => response.text())
             .then(text => {
-                const data = JSON.parse(text.substr(47).slice(0, -2)); // Asegúrate de declarar 'data' con 'const'
+                data = JSON.parse(text.substr(47).slice(0, -2)); // Asigna el valor de 'data' globalmente
                 displayProducts(data.table.rows);
+
+                // Define la función filterByCategory dentro de la cadena de promesas
+                function filterByCategory(category) {
+                    const filteredProducts = data.table.rows.filter(row => row.c[5].v === category || category === '');
+                    displayProducts(filteredProducts);
+                }
             });
     });
+
+
+
+
 
 // Función para abrir WhatsApp con la información del pedido
 function openWhatsApp() {
@@ -235,3 +250,12 @@ function getCartDetails() {
     });
     return cartDetails;
 }
+
+// Función para filtrar productos por categoría
+function filterByCategory(category) {
+    const filteredProducts = data.table.rows.filter(row => row.c[5].v === category || category === '');
+    displayProducts(filteredProducts);
+}
+
+
+
