@@ -257,7 +257,6 @@ fetch(`${FULL_URL}&headers=1`)
     });
 
 // Función para abrir WhatsApp con la información del pedido
-
 function openWhatsApp() {
     const customerName = document.getElementById('customerName').value;
     const address = document.getElementById('address').value;
@@ -285,7 +284,6 @@ function openWhatsApp() {
 
     window.open(`https://api.whatsapp.com/send?phone=3053012883&text=${encodeURIComponent(message)}`);
 }
-
 
 // Función para obtener los detalles del carrito
 function getCartDetails() {
