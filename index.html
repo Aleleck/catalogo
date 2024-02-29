@@ -38,6 +38,14 @@
                 <label for="address">Dirección:</label>
                 <input type="text" id="address" required>
             </form>
+            <!-- Select para elegir la opción de entrega -->
+            <label for="deliveryOption">Opción de Entrega:</label>
+            <select id="deliveryOption">
+                <option value="pickup">Para recoger</option>
+                <option value="moto">Domicilio en moto</option>
+                <option value="car">Domicilio en carro</option>
+            </select>
+            <!-- Fin del select -->
             <div id="cartItems"></div>
             <button type="button" onclick="openWhatsApp()"
             style="background-color: #4CAF50; color: white; padding:   10px   24px; border: none; cursor: pointer; width:   100%; opacity:   0.9;">Realizar Pedido</button>

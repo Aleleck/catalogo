@@ -37,17 +37,20 @@ function displayProducts(products) {
 
         const productValue = document.createElement('p');
         productValue.classList.add('product-value');
-        productValue.innerText = `Para recoger: ${productRow.c[4].v}`; // Valor
+        // Formatear el valor del producto con el separador de miles
+        productValue.innerText = `Para recoger: ${parseFloat(productRow.c[4].v).toLocaleString('es-ES')}`;
         productInfo.appendChild(productValue);
 
         const motoDeliveryPrice = document.createElement('p');
         motoDeliveryPrice.classList.add('product-delivery-price');
-        motoDeliveryPrice.innerText = `Domicilio en moto: ${productRow.c[6].v}`; // Precio para domicilio en moto
+        // Formatear el precio de entrega en moto con el separador de miles
+        motoDeliveryPrice.innerText = `Domicilio en moto: ${parseFloat(productRow.c[6].v).toLocaleString('es-ES')}`;
         productInfo.appendChild(motoDeliveryPrice);
 
         const carDeliveryPrice = document.createElement('p');
         carDeliveryPrice.classList.add('product-delivery-price');
-        carDeliveryPrice.innerText = `Domicilio en carro: ${productRow.c[7].v}`; // Precio para domicilio en carro
+        // Formatear el precio de entrega en carro con el separador de miles
+        carDeliveryPrice.innerText = `Domicilio en carro: ${parseFloat(productRow.c[7].v).toLocaleString('es-ES')}`;
         productInfo.appendChild(carDeliveryPrice);
 
         addToCart(productRow, productCard);
@@ -55,7 +58,6 @@ function displayProducts(products) {
         productList.appendChild(productCard);
     });
 }
-
 
 // Función para mostrar el carrito en el modal
 function showCart() {
@@ -65,6 +67,9 @@ function showCart() {
 
     let total = 0; // Variable para almacenar el total del pedido
     let itemCount = cart.length; // Contar la cantidad de artículos en el carrito
+
+    // Obtener la opción de entrega seleccionada
+    const deliveryOption = document.getElementById('deliveryOption').value;
 
     // Crear la tabla
     const table = document.createElement('table');
@@ -87,8 +92,27 @@ function showCart() {
         nameCell.textContent = item.name;
         const quantityCell = document.createElement('td');
         quantityCell.textContent = item.quantity;
+
+        // Obtener el valor correcto según la opción de entrega
+        let price = 0;
+        if (deliveryOption === 'pickup') {
+            price = item.pickupPrice;
+        } else if (deliveryOption === 'moto') {
+            price = item.motoDeliveryPrice;
+        } else if (deliveryOption === 'car') {
+            price = item.carDeliveryPrice;
+        }
+
         const valueCell = document.createElement('td');
-        valueCell.textContent = item.value.toLocaleString('es-ES'); // Formatear el valor
+        if (!isNaN(price)) {
+            const subtotal = item.quantity * price;
+            valueCell.textContent = subtotal.toLocaleString('es-ES'); // Formatear el valor
+            // Calcular el total del pedido
+            total += subtotal;
+        } else {
+            valueCell.textContent = 'Precio no disponible';
+        }
+
         const removeButtonCell = document.createElement('td');
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Eliminar';
@@ -103,24 +127,22 @@ function showCart() {
         row.appendChild(valueCell);
         row.appendChild(removeButtonCell);
         table.appendChild(row);
-
-        // Calcular el total del pedido
-        total += item.quantity * parseFloat(item.value);
     });
 
     // Agregar la tabla al contenedor del carrito
     cartItemsDiv.appendChild(table);
 
     // Mostrar el total del pedido en el modal del carrito
-    // Mostrar el total del pedido en el modal del carrito
     const totalDiv = document.createElement('div');
     totalDiv.innerHTML = `<span style="font-size: 18px; font-weight: bold; text-align: center;">Valor Total: ${total.toLocaleString('es-ES')}</span>`; // Formatear el total
     cartItemsDiv.appendChild(totalDiv);
 
-
     document.getElementById('cartModal').style.display = 'block';
     document.getElementById('cartItemCount').innerText = itemCount;
 }
+
+// Evento change para el select de opciones de entrega
+document.getElementById('deliveryOption').addEventListener('change', showCart);
 
 // Evento click del botón flotante para abrir el modal
 document.getElementById('floatCartBtn').addEventListener('click', showCart);
@@ -165,12 +187,14 @@ function addToCart(productRow, productCard) {
                     name: productRow.c[2].v,
                     imageUrl: productRow.c[1].v,
                     quantity: quantity,
-                    value: parseFloat(productRow.c[4].v) // Agregar el valor del producto al objeto del carrito
+                    pickupPrice: parseFloat(productRow.c[4].v), // Precio para recoger
+                    motoDeliveryPrice: parseFloat(productRow.c[6].v), // Precio para entrega en moto
+                    carDeliveryPrice: parseFloat(productRow.c[7].v) // Precio para entrega en carro
                 });
             }
 
             localStorage.setItem('shopping-cart', JSON.stringify(cart));
-            alert('Producto añadido al carrito!');
+            alert('¡Producto añadido al carrito!');
             const currentCount = parseInt(document.getElementById('cartItemCount').innerText);
             document.getElementById('cartItemCount').innerText = currentCount + 1;
         } else {
@@ -209,7 +233,7 @@ fetch(`${FULL_URL}&headers=1`)
                 const button = document.createElement('button');
                 button.classList.add('abf');
                 button.textContent = row.c[5].v;
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     filterByCategory(row.c[5].v);
                 });
                 categoryButtons.appendChild(button);
